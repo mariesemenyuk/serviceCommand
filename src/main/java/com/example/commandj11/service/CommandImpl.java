@@ -10,6 +10,16 @@ import javax.jws.WebService;
 @WebService(endpointInterface = "com.example.commandj11.service.Command")
 public class CommandImpl implements Command{
 
+    private static class SingletonHelper {
+        private static final CommandImpl INSTANCE = new CommandImpl();
+    }
+
+    public static CommandImpl getInstance() {
+        return CommandImpl.SingletonHelper.INSTANCE;
+    }
+
+    // TODO разобраться как возращать параметры в xml
+
     @Override
     public String createGroup(String name) {
         GroupEntity newGroup = new GroupEntity();
@@ -68,6 +78,16 @@ public class CommandImpl implements Command{
 
     @Override
     public String getAllUsersInGroup(String groupname) {
+        return null;
+    }
+
+    @Override
+    public String getAllUsers() {
+        return null;
+    }
+
+    @Override
+    public String getUser() {
         return null;
     }
 }

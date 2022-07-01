@@ -20,4 +20,10 @@ public interface Command {
     @WebMethod
     public String getAllUsersInGroup(String groupname);
 
+    @WebMethod
+    public String getAllUsers();
+
+    @WebMethod
+    public String getUser();
+
 }
