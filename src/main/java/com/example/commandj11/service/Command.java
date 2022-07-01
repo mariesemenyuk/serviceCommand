@@ -9,6 +9,9 @@ import javax.jws.soap.SOAPBinding;
 public interface Command {
 
     @WebMethod
+    public String saveUser(String name);
+
+    @WebMethod
     public String createGroup(String name);
 
     @WebMethod

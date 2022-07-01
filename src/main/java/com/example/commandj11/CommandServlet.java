@@ -55,6 +55,11 @@ public class CommandServlet extends HttpServlet {
                 String name = args.get(0);
                 commandService.createGroup(name.substring(6, name.length() - 7));
                 break;
+            case "addUserToGroup":
+                String username = args.get(0);
+                String groupName = args.get(1);
+                commandService.addUserToGroup(username, groupName);
+                break;
             default:
                 break;
         }

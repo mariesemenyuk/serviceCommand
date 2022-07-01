@@ -1,9 +1,13 @@
 package com.example.commandj11.service;
 
 import com.example.commandj11.entity.GroupEntity;
+import com.example.commandj11.entity.UserEntity;
+import com.example.commandj11.repository.GroupRepository;
+import com.example.commandj11.repository.UserRepository;
 import com.example.commandj11.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.jws.WebService;
 
@@ -18,7 +22,15 @@ public class CommandImpl implements Command{
         return CommandImpl.SingletonHelper.INSTANCE;
     }
 
+    private final GroupRepository groupRepository = GroupRepository.getInstance();
+    private UserRepository userRepository = UserRepository.getInstance();
+
     // TODO разобраться как возращать параметры в xml
+
+    @Override
+    public String saveUser(String name) {
+        return null;
+    }
 
     @Override
     public String createGroup(String name) {
@@ -49,26 +61,37 @@ public class CommandImpl implements Command{
     @Override
     public String addUserToGroup(String username, String groupName) {
 
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-//        Session session = null;
-//        Transaction transaction = null;
-//        try {
-//            session = HibernateUtil.getSessionFactory().openSession();
-//            transaction = session.beginTransaction();
-//
-//            session.save(newGroup);
-//            transaction.commit();
-//        }
-//        catch (Exception e) {
-//            if (transaction != null) {
-//                transaction.rollback();
-//            }
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-        return null;
+            String hql = "FROM GroupEntity G WHERE G.title = :title";
+            Query query = session.createQuery(hql, GroupEntity.class);
+            query.setParameter("title", groupName);
+            GroupEntity group = (GroupEntity) query.list().get(0);
+
+            hql = "FROM UserEntity U WHERE U.username = :username";
+            query = session.createQuery(hql, UserEntity.class);
+            query.setParameter("username", username);
+            UserEntity user = (UserEntity) query.list().get(0);
+
+            user.setGroup(group);
+
+            session.update(group);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return "Success";
     }
 
     @Override
