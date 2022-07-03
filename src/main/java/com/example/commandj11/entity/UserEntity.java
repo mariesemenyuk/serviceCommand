@@ -9,8 +9,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "username")
-    private String username;
+    @Column(name = "chat_id")
+    private String chatId;
+    @Column(name = "full_name")
+    private String fullName;
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     private GroupEntity group;
@@ -30,12 +33,28 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getChatId() {
+        return chatId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public RoleEntity getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEntity role) {
+        this.role = role;
     }
 
     public GroupEntity getGroup() {

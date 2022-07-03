@@ -1,15 +1,18 @@
 package com.example.commandj11.service;
 
 import com.example.commandj11.entity.GroupEntity;
+import com.example.commandj11.entity.RoleEntity;
 import com.example.commandj11.entity.UserEntity;
+import com.example.commandj11.models.User;
 import com.example.commandj11.repository.GroupRepository;
+import com.example.commandj11.repository.RoleRepository;
 import com.example.commandj11.repository.UserRepository;
-import com.example.commandj11.utils.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import jakarta.jws.WebService;
 
-import javax.jws.WebService;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @WebService(endpointInterface = "com.example.commandj11.service.Command")
 public class CommandImpl implements Command{
@@ -22,95 +25,72 @@ public class CommandImpl implements Command{
         return CommandImpl.SingletonHelper.INSTANCE;
     }
 
-    private final GroupRepository groupRepository = GroupRepository.getInstance();
-    private UserRepository userRepository = UserRepository.getInstance();
+    private RoleRepository roleRepository = new RoleRepository();
+
+    private UserRepository userRepository = new UserRepository();
+
+    private GroupRepository groupRepository = new GroupRepository();
 
     // TODO разобраться как возращать параметры в xml
 
     @Override
-    public String saveUser(String name) {
-        return null;
+    public String saveUser(String chatId, String fullName) {
+        UserEntity newUser = new UserEntity();
+        newUser.setChatId(chatId);
+        newUser.setFullName(fullName);
+        RoleEntity userRole = roleRepository.find("USER");
+        List<UserEntity> users = userRole.getUsers();
+        users.add(newUser);
+        userRole.setUsers(users);
+        roleRepository.save(userRole);
+        return "Success";
     }
 
     @Override
     public String createGroup(String name) {
+
         GroupEntity newGroup = new GroupEntity();
         newGroup.setTitle(name);
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            session.save(newGroup);
-            transaction.commit();
-        }
-        catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        groupRepository.save(newGroup);
 
         return "Success";
     }
 
     @Override
-    public String addUserToGroup(String username, String groupName) {
-
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            String hql = "FROM GroupEntity G WHERE G.title = :title";
-            Query query = session.createQuery(hql, GroupEntity.class);
-            query.setParameter("title", groupName);
-            GroupEntity group = (GroupEntity) query.list().get(0);
-
-            hql = "FROM UserEntity U WHERE U.username = :username";
-            query = session.createQuery(hql, UserEntity.class);
-            query.setParameter("username", username);
-            UserEntity user = (UserEntity) query.list().get(0);
-
-            user.setGroup(group);
-
-            session.update(group);
-            transaction.commit();
-        }
-        catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    public String addUserToGroup(String chatId, String groupName) {
+        userRepository.updateUserGroup(chatId, groupName);
         return "Success";
     }
 
     @Override
-    public String deleteUserFromGroup(String username) {
-        return null;
+    public String deleteUserFromGroup(String chatId) {
+        userRepository.deleteUserFromGroup(chatId);
+        return "Success";
     }
 
     @Override
-    public String getAllUsersInGroup(String groupname) {
-        return null;
+    public Set<User> getAllUsersAndGroups() {
+
+        Set<User> userSet = new HashSet<>();
+        User userXml = new User();
+        userXml.setChatId("21131");
+        userXml.setFullName("Smb");
+        userXml.setGroup("ada");
+
+        userSet.add(userXml);
+        userSet.add(new User("356", "User2", "green"));
+
+        return userSet;
     }
 
     @Override
-    public String getAllUsers() {
-        return null;
+    public List<String> getAllChatIds() {
+        List<UserEntity> allUsers = userRepository.findAll();
+        List<String> chatIds = new ArrayList<>();
+        for (UserEntity user: allUsers) {
+            chatIds.add(user.getChatId());
+        }
+        return chatIds;
     }
 
-    @Override
-    public String getUser() {
-        return null;
-    }
 }

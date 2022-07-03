@@ -9,15 +9,16 @@
             com.sun.xml.ws.transport.http.servlet.WSServletContextListener
         </listener-class>
     </listener>
-<!--    <servlet>-->
-<!--        <servlet-name>Group</servlet-name>-->
-<!--        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet-->
-<!--        </servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>Group</servlet-name>-->
-<!--        <url-pattern>/groups</url-pattern>-->
-<!--    </servlet-mapping>-->
+
+        <servlet>
+            <servlet-name>Group</servlet-name>
+            <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet
+            </servlet-class>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>Group</servlet-name>
+            <url-pattern>/groups</url-pattern>
+        </servlet-mapping>
 
     <servlet>
         <servlet-name>CommandServlet</servlet-name>

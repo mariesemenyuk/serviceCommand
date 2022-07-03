@@ -14,7 +14,7 @@ public class GroupEntity {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     private List<UserEntity> users;
 
     public GroupEntity() {

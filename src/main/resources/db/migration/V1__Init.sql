@@ -6,7 +6,8 @@ ALTER DATABASE
 CREATE TABLE "users"
 (
     "id"       bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    "username"    text NOT NULL,
+    "chat_id"    varchar(15) NOT NULL,
+    "full_name"    text NOT NULL,
     "group_id" bigint,
     "role_id" bigint
 );

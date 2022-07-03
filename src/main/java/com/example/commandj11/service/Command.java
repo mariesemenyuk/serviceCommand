@@ -1,15 +1,21 @@
 package com.example.commandj11.service;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
+import com.example.commandj11.models.User;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
+
+
+import java.util.List;
+import java.util.Set;
+
 
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface Command {
 
     @WebMethod
-    public String saveUser(String name);
+    public String saveUser(String chatId, String fullName);
 
     @WebMethod
     public String createGroup(String name);
@@ -21,12 +27,8 @@ public interface Command {
     public String deleteUserFromGroup(String username);
 
     @WebMethod
-    public String getAllUsersInGroup(String groupname);
+    public Set<User> getAllUsersAndGroups();
 
     @WebMethod
-    public String getAllUsers();
-
-    @WebMethod
-    public String getUser();
-
+    public List<String> getAllChatIds();
 }

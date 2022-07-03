@@ -13,9 +13,6 @@ import org.hibernate.cfg.Environment;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author imssbora
- */
 public class HibernateUtil {
 
 

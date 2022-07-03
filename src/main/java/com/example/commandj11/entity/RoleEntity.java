@@ -15,7 +15,7 @@ public class RoleEntity {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserEntity> users;
 
     public RoleEntity() {
