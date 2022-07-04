@@ -6,7 +6,6 @@ import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 
 
-import java.util.List;
 import java.util.Set;
 
 
@@ -30,5 +29,5 @@ public interface Command {
     public Set<User> getAllUsersAndGroups();
 
     @WebMethod
-    public List<String> getAllChatIds();
+    public Set<String> getAllChatIds();
 }

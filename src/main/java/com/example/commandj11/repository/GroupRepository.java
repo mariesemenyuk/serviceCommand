@@ -1,7 +1,6 @@
 package com.example.commandj11.repository;
 
 import com.example.commandj11.entity.GroupEntity;
-import com.example.commandj11.entity.UserEntity;
 import com.example.commandj11.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -51,6 +50,7 @@ public class GroupRepository {
         catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+                throw new RuntimeException("Group was not created. " + e.getMessage());
             }
         } finally {
             if (session != null) {

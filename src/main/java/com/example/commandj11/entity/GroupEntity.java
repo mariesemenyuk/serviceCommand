@@ -11,7 +11,7 @@ public class GroupEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)

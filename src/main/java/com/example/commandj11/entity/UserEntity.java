@@ -9,7 +9,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "chat_id")
+    @Column(name = "chat_id", unique = true)
     private String chatId;
     @Column(name = "full_name")
     private String fullName;

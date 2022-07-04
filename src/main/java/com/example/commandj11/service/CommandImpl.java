@@ -9,7 +9,6 @@ import com.example.commandj11.repository.RoleRepository;
 import com.example.commandj11.repository.UserRepository;
 import jakarta.jws.WebService;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,18 +30,14 @@ public class CommandImpl implements Command{
 
     private GroupRepository groupRepository = new GroupRepository();
 
-    // TODO разобраться как возращать параметры в xml
-
     @Override
     public String saveUser(String chatId, String fullName) {
         UserEntity newUser = new UserEntity();
         newUser.setChatId(chatId);
         newUser.setFullName(fullName);
         RoleEntity userRole = roleRepository.find("USER");
-        List<UserEntity> users = userRole.getUsers();
-        users.add(newUser);
-        userRole.setUsers(users);
-        roleRepository.save(userRole);
+
+        userRepository.save(newUser, userRole);
         return "Success";
     }
 
@@ -70,23 +65,23 @@ public class CommandImpl implements Command{
 
     @Override
     public Set<User> getAllUsersAndGroups() {
-
         Set<User> userSet = new HashSet<>();
-        User userXml = new User();
-        userXml.setChatId("21131");
-        userXml.setFullName("Smb");
-        userXml.setGroup("ada");
-
-        userSet.add(userXml);
-        userSet.add(new User("356", "User2", "green"));
-
+        List<UserEntity> allUsers = userRepository.findAll();
+        for (UserEntity user: allUsers) {
+            User newUser = new User();
+            newUser.setChatId(user.getChatId());
+            newUser.setFullName(user.getFullName());
+            if(user.getGroup() == null) newUser.setGroup(null);
+            else newUser.setGroup(user.getGroup().getTitle());
+            userSet.add(newUser);
+        }
         return userSet;
     }
 
     @Override
-    public List<String> getAllChatIds() {
+    public Set<String> getAllChatIds() {
         List<UserEntity> allUsers = userRepository.findAll();
-        List<String> chatIds = new ArrayList<>();
+        Set<String> chatIds = new HashSet<>();
         for (UserEntity user: allUsers) {
             chatIds.add(user.getChatId());
         }

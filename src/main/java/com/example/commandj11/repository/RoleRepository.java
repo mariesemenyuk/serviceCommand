@@ -1,7 +1,6 @@
 package com.example.commandj11.repository;
 
 import com.example.commandj11.entity.RoleEntity;
-import com.example.commandj11.entity.UserEntity;
 import com.example.commandj11.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

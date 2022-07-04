@@ -6,7 +6,7 @@ ALTER DATABASE
 CREATE TABLE "users"
 (
     "id"       bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    "chat_id"    varchar(15) NOT NULL,
+    "chat_id"    varchar(15) NOT NULL UNIQUE,
     "full_name"    text NOT NULL,
     "group_id" bigint,
     "role_id" bigint
@@ -14,14 +14,14 @@ CREATE TABLE "users"
 
 CREATE TABLE "roles"
 (
-    "id"   bigint PRIMARY KEY,
-    "title" text NOT NULL
+    "id"   bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    "title" text NOT NULL UNIQUE
 );
 
 CREATE TABLE "groups"
 (
     "id"   bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    "title" text NOT NULL
+    "title" text NOT NULL UNIQUE
 );
 
 ALTER TABLE command.users ADD CONSTRAINT fk_users_groups_group_id FOREIGN KEY (group_id)
@@ -30,8 +30,8 @@ ALTER TABLE command.users ADD CONSTRAINT fk_users_roles_role_id FOREIGN KEY (rol
     REFERENCES roles;
 
 
-INSERT INTO roles (id, title)
-VALUES (0, 'USER'),
-       (1, 'TEAMLEAD'),
-       (2, 'TEACHER'),
-       (3, 'ADMIN');
+INSERT INTO roles (title)
+VALUES ('USER'),
+       ('TEAMLEAD'),
+       ('TEACHER'),
+       ('ADMIN');

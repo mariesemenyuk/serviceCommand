@@ -12,10 +12,10 @@ public class RoleEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private List<UserEntity> users;
 
     public RoleEntity() {

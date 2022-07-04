@@ -11,7 +11,7 @@ public class CommandPublisher {
 
     public static void main(String[] args) {
         Endpoint endpoint = Endpoint.create(new CommandImpl());
-        endpoint.publish("https://af95-185-119-1-92.eu.ngrok.io/groups");
+        endpoint.publish("http://localhost:8080/groups");
 
         logger.info("Country web service ready to consume requests!");
     }
