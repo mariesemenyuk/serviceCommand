@@ -14,20 +14,29 @@ import java.util.Set;
 public interface Command {
 
     @WebMethod
-    public String saveUser(String chatId, String fullName);
+    public String saveUser(User user, String role);
 
     @WebMethod
-    public String createGroup(String name);
+    public String createGroup(String title);
 
     @WebMethod
-    public String addUserToGroup(String username, String groupName);
+    public String addUserToGroup(String chatId, String groupName);
 
     @WebMethod
-    public String deleteUserFromGroup(String username);
+    public String deleteUserFromGroup(String chatId);
+
+    @WebMethod
+    public Set<String> getAllGroups();
 
     @WebMethod
     public Set<User> getAllUsersAndGroups();
 
     @WebMethod
     public Set<String> getAllChatIds();
+
+    @WebMethod
+    public User getUser(String chatId);
+
+    @WebMethod
+    public String getUserRole(String chatId);
 }

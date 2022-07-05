@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GroupRepository {
     public GroupRepository() {
@@ -28,6 +31,7 @@ public class GroupRepository {
         catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+                throw new RuntimeException("Group was not found. " + e.getMessage());
             }
         } finally {
             if (session != null) {
@@ -58,6 +62,31 @@ public class GroupRepository {
             }
         }
         return groupEntity;
+    }
+
+    public List<GroupEntity> findAll() {
+        List<GroupEntity> groups = new ArrayList<>();
+
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            String hql = "FROM GroupEntity U";
+            Query query = session.createQuery(hql, GroupEntity.class);
+            groups = query.list();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+                throw new RuntimeException("Groups were not found. " + e.getMessage());
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return groups;
     }
 
 }

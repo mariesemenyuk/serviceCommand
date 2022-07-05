@@ -16,7 +16,7 @@ public class UserRepository {
     public UserRepository() {
     }
 
-    public UserEntity find(String charId) {
+    public UserEntity find(String chatId) {
         UserEntity user = new UserEntity();
 
         Session session = null;
@@ -25,13 +25,14 @@ public class UserRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
 
-            String hql = "FROM UserEntity U WHERE U.charId = :charId";
+            String hql = "FROM UserEntity U WHERE U.chatId = :chatId";
             Query query = session.createQuery(hql, UserEntity.class);
-            query.setParameter("charId", charId);
+            query.setParameter("chatId", chatId);
             user = (UserEntity) query.list().get(0);
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+                throw new RuntimeException("User was not found.");
             }
         } finally {
             if (session != null) {
@@ -56,7 +57,7 @@ public class UserRepository {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw new RuntimeException("Users were not found. " + e.getMessage());
+                throw new RuntimeException("Users were not found.");
             }
         } finally {
             if (session != null) {
@@ -89,7 +90,7 @@ public class UserRepository {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw new RuntimeException("User was not saved. " + e.getMessage());
+                throw new RuntimeException("User was not saved.");
             }
         } finally {
             if (session != null) {
@@ -124,7 +125,7 @@ public class UserRepository {
         catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw new RuntimeException("User was not added to group. " + e.getMessage());
+                throw new RuntimeException("User was not added to group.");
             }
         } finally {
             if (session != null) {
@@ -153,7 +154,7 @@ public class UserRepository {
         catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw new RuntimeException("User was not deleted from group. " + e.getMessage());
+                throw new RuntimeException("User was not deleted from group.");
             }
         } finally {
             if (session != null) {

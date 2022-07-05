@@ -31,11 +31,16 @@ public class CommandImpl implements Command{
     private GroupRepository groupRepository = new GroupRepository();
 
     @Override
-    public String saveUser(String chatId, String fullName) {
+    public String saveUser(User user, String role) {
         UserEntity newUser = new UserEntity();
-        newUser.setChatId(chatId);
-        newUser.setFullName(fullName);
-        RoleEntity userRole = roleRepository.find("USER");
+        newUser.setChatId(user.getChatId());
+        newUser.setFullName(user.getFullName());
+        if(user.getGroup() == null) newUser.setGroup(null);
+        else {
+            GroupEntity group = groupRepository.find(user.getGroup());
+            newUser.setGroup(group);
+        }
+        RoleEntity userRole = roleRepository.find(role);
 
         userRepository.save(newUser, userRole);
         return "Success";
@@ -64,6 +69,16 @@ public class CommandImpl implements Command{
     }
 
     @Override
+    public Set<String>  getAllGroups() {
+        List<GroupEntity> allGroups = groupRepository.findAll();
+        Set<String> groupsTitles = new HashSet<>();
+        for (GroupEntity group: allGroups) {
+            groupsTitles.add(group.getTitle());
+        }
+        return groupsTitles;
+    }
+
+    @Override
     public Set<User> getAllUsersAndGroups() {
         Set<User> userSet = new HashSet<>();
         List<UserEntity> allUsers = userRepository.findAll();
@@ -88,4 +103,20 @@ public class CommandImpl implements Command{
         return chatIds;
     }
 
+    @Override
+    public User getUser(String chatId) {
+        User user = new User();
+        UserEntity userEntity = userRepository.find(chatId);
+        user.setChatId(userEntity.getChatId());
+        user.setFullName(userEntity.getFullName());
+        if(userEntity.getGroup() == null) user.setGroup(null);
+        else user.setGroup(userEntity.getGroup().getTitle());
+        return user;
+    }
+
+    @Override
+    public String getUserRole(String chatId) {
+        UserEntity userEntity = userRepository.find(chatId);
+        return userEntity.getRole().getTitle();
+    }
 }
