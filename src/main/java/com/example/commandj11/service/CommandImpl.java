@@ -30,6 +30,12 @@ public class CommandImpl implements Command{
 
     private GroupRepository groupRepository = new GroupRepository();
 
+    /**
+     * Save user and his role in DB. Group can be empty. In this case null for group is saved in DB.
+     * @param user
+     * @param role
+     * @return
+     */
     @Override
     public String saveUser(User user, String role) {
         UserEntity newUser = new UserEntity();
@@ -46,6 +52,11 @@ public class CommandImpl implements Command{
         return "Success";
     }
 
+    /**
+     * Create group with specific name
+     * @param name
+     * @return
+     */
     @Override
     public String createGroup(String name) {
 
@@ -56,18 +67,33 @@ public class CommandImpl implements Command{
         return "Success";
     }
 
+    /**
+     * Add user with specific chatId to group with groupName
+     * @param chatId
+     * @param groupName
+     * @return
+     */
     @Override
     public String addUserToGroup(String chatId, String groupName) {
         userRepository.updateUserGroup(chatId, groupName);
         return "Success";
     }
 
+    /**
+     * Removes user from the group
+     * @param chatId
+     * @return
+     */
     @Override
     public String deleteUserFromGroup(String chatId) {
         userRepository.deleteUserFromGroup(chatId);
         return "Success";
     }
 
+    /**
+     * Return all existing groups
+     * @return Set of group titles
+     */
     @Override
     public Set<String>  getAllGroups() {
         List<GroupEntity> allGroups = groupRepository.findAll();
@@ -78,6 +104,10 @@ public class CommandImpl implements Command{
         return groupsTitles;
     }
 
+    /**
+     * Returns all users. Info about each user contains chatId, full name and group title
+     * @return
+     */
     @Override
     public Set<User> getAllUsersAndGroups() {
         Set<User> userSet = new HashSet<>();
@@ -93,6 +123,10 @@ public class CommandImpl implements Command{
         return userSet;
     }
 
+    /**
+     * Get a list of all users' chatId
+     * @return
+     */
     @Override
     public Set<String> getAllChatIds() {
         List<UserEntity> allUsers = userRepository.findAll();
@@ -103,6 +137,11 @@ public class CommandImpl implements Command{
         return chatIds;
     }
 
+    /**
+     * Get info(chatId, full name, group title) about one specific user
+     * @param chatId
+     * @return
+     */
     @Override
     public User getUser(String chatId) {
         User user = new User();
@@ -114,6 +153,11 @@ public class CommandImpl implements Command{
         return user;
     }
 
+    /**
+     * Get role(USER, TEACHER, TEAMLEAD, ADMIN) for specific user
+     * @param chatId
+     * @return
+     */
     @Override
     public String getUserRole(String chatId) {
         UserEntity userEntity = userRepository.find(chatId);
