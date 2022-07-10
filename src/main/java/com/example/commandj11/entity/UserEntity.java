@@ -25,6 +25,19 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(String chatId, String fullName, GroupEntity group) {
+        this.chatId = chatId;
+        this.fullName = fullName;
+        this.group = group;
+    }
+
+    public UserEntity(String chatId, String fullName, GroupEntity group, RoleEntity role) {
+        this.chatId = chatId;
+        this.fullName = fullName;
+        this.group = group;
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }

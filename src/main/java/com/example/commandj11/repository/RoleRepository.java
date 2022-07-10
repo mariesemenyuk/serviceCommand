@@ -10,6 +10,11 @@ public class RoleRepository {
     public RoleRepository() {
     }
 
+    /**
+     * Find role entity with title
+     * @param roleName
+     * @return
+     */
     public RoleEntity find(String roleName) {
         RoleEntity role = new RoleEntity();
 
@@ -36,6 +41,11 @@ public class RoleRepository {
         return role;
     }
 
+    /**
+     * Save new role
+     * @param roleEntity
+     * @return
+     */
     public RoleEntity save(RoleEntity roleEntity) {
         Session session = null;
         Transaction transaction = null;

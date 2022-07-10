@@ -113,12 +113,14 @@ public class CommandImpl implements Command{
         Set<User> userSet = new HashSet<>();
         List<UserEntity> allUsers = userRepository.findAll();
         for (UserEntity user: allUsers) {
-            User newUser = new User();
-            newUser.setChatId(user.getChatId());
-            newUser.setFullName(user.getFullName());
-            if(user.getGroup() == null) newUser.setGroup(null);
-            else newUser.setGroup(user.getGroup().getTitle());
-            userSet.add(newUser);
+            if(user.getRole().getTitle().equals("USER") || user.getRole().getTitle().equals("TEAMLEAD")) {
+                User newUser = new User();
+                newUser.setChatId(user.getChatId());
+                newUser.setFullName(user.getFullName());
+                if (user.getGroup() == null) newUser.setGroup(null);
+                else newUser.setGroup(user.getGroup().getTitle());
+                userSet.add(newUser);
+            }
         }
         return userSet;
     }

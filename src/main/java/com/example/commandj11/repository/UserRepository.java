@@ -16,6 +16,11 @@ public class UserRepository {
     public UserRepository() {
     }
 
+    /**
+     * Find user with chatId
+     * @param chatId
+     * @return
+     */
     public UserEntity find(String chatId) {
         UserEntity user = new UserEntity();
 
@@ -42,6 +47,10 @@ public class UserRepository {
         return user;
     }
 
+    /**
+     * Returns all existing users
+     * @return
+     */
     public List<UserEntity> findAll() {
         List<UserEntity> users = new ArrayList<>();
 
@@ -67,6 +76,12 @@ public class UserRepository {
         return users;
     }
 
+    /**
+     * Save user entity to database
+     * @param newUser
+     * @param userRole
+     * @return
+     */
     public UserEntity save(UserEntity newUser, RoleEntity userRole) {
         Session session = null;
         Transaction transaction = null;
@@ -100,6 +115,11 @@ public class UserRepository {
         return user;
     }
 
+    /**
+     * Set group to the user with chatId
+     * @param chatId
+     * @param groupName
+     */
     public void updateUserGroup(String chatId, String groupName) {
         Session session = null;
         Transaction transaction = null;
@@ -134,6 +154,10 @@ public class UserRepository {
         }
     }
 
+    /**
+     * Unset group for the user with chatId. Group field is null
+     * @param chatId
+     */
     public void deleteUserFromGroup(String chatId) {
         Session session = null;
         Transaction transaction = null;

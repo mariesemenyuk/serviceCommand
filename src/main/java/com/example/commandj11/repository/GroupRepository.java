@@ -14,6 +14,11 @@ public class GroupRepository {
     public GroupRepository() {
     }
 
+    /**
+     * Find group entity with title
+     * @param title
+     * @return
+     */
     public GroupEntity find(String title) {
         GroupEntity group = new GroupEntity();
 
@@ -41,6 +46,11 @@ public class GroupRepository {
         return group;
     }
 
+    /**
+     * Save new group
+     * @param groupEntity
+     * @return
+     */
     public GroupEntity save(GroupEntity groupEntity) {
         Session session = null;
         Transaction transaction = null;
@@ -64,6 +74,10 @@ public class GroupRepository {
         return groupEntity;
     }
 
+    /**
+     * Return list of all existing groups
+     * @return
+     */
     public List<GroupEntity> findAll() {
         List<GroupEntity> groups = new ArrayList<>();
 

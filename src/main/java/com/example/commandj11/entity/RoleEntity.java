@@ -21,6 +21,10 @@ public class RoleEntity {
     public RoleEntity() {
     }
 
+    public RoleEntity(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }
