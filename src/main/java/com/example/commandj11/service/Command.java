@@ -5,8 +5,7 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 
-
-import java.util.Set;
+import java.util.ArrayList;
 
 
 @WebService
@@ -26,13 +25,13 @@ public interface Command {
     public String deleteUserFromGroup(String chatId);
 
     @WebMethod
-    public Set<String> getAllGroups();
+    public ArrayList<String> getAllGroups();
 
     @WebMethod
-    public Set<User> getAllUsersAndGroups();
+    public ArrayList<User> getAllUsersAndGroups();
 
     @WebMethod
-    public Set<String> getAllChatIds();
+    public ArrayList<String> getAllChatIds();
 
     @WebMethod
     public User getUser(String chatId);

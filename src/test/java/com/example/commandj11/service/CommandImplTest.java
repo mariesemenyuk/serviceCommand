@@ -77,7 +77,7 @@ class CommandImplTest {
 
         doReturn(groupsMock).when(groupRepository).findAll();
 
-        Set<String> groupsTitles = commandImpl.getAllGroups();
+        ArrayList<String> groupsTitles = commandImpl.getAllGroups();
 
         assertEquals(2, groupsTitles.size());
         assertTrue(groupsTitles.toString().contains("Green"));
@@ -94,7 +94,7 @@ class CommandImplTest {
 
         doReturn(usersFromMock).when(userRepository).findAll();
 
-        Set<User> users = commandImpl.getAllUsersAndGroups();
+        ArrayList<User> users = commandImpl.getAllUsersAndGroups();
 
         assertEquals(2, users.size());
         for (User user: users) {

@@ -9,6 +9,7 @@ import com.example.commandj11.repository.RoleRepository;
 import com.example.commandj11.repository.UserRepository;
 import jakarta.jws.WebService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,9 +96,9 @@ public class CommandImpl implements Command{
      * @return Set of group titles
      */
     @Override
-    public Set<String>  getAllGroups() {
+    public ArrayList<String>  getAllGroups() {
         List<GroupEntity> allGroups = groupRepository.findAll();
-        Set<String> groupsTitles = new HashSet<>();
+        ArrayList<String> groupsTitles = new ArrayList<>();
         for (GroupEntity group: allGroups) {
             groupsTitles.add(group.getTitle());
         }
@@ -109,8 +110,8 @@ public class CommandImpl implements Command{
      * @return
      */
     @Override
-    public Set<User> getAllUsersAndGroups() {
-        Set<User> userSet = new HashSet<>();
+    public ArrayList<User> getAllUsersAndGroups() {
+        ArrayList<User> userSet = new ArrayList<>();
         List<UserEntity> allUsers = userRepository.findAll();
         for (UserEntity user: allUsers) {
             if(user.getRole().getTitle().equals("USER") || user.getRole().getTitle().equals("TEAMLEAD")) {
@@ -130,9 +131,9 @@ public class CommandImpl implements Command{
      * @return
      */
     @Override
-    public Set<String> getAllChatIds() {
+    public ArrayList<String> getAllChatIds() {
         List<UserEntity> allUsers = userRepository.findAll();
-        Set<String> chatIds = new HashSet<>();
+        ArrayList<String> chatIds = new ArrayList<>();
         for (UserEntity user: allUsers) {
             chatIds.add(user.getChatId());
         }
