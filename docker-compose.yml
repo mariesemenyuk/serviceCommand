@@ -1,0 +1,35 @@
+version: '1.0'
+services:
+    command-db:
+        image: postgres:10.19
+        container_name: db
+        environment:
+            POSTGRES_DB: "tasktracker"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "1111"
+        volumes:
+            - command-db-data:/var/lib/postgresql/data
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        networks:
+            - command-net
+        ports:
+            - 5432:5432
+
+    command-service:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        container_name: command-service
+        ports:
+            - 8080:8080
+        restart: on-failure
+        depends_on:
+            - command-db
+        networks:
+            - command-net
+
+volumes:
+    command-db-data:
+
+networks:
+    command-net:

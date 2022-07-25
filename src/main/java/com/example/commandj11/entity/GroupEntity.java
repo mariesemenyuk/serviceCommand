@@ -1,10 +1,10 @@
 package com.example.commandj11.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "groups", schema = "command")
 public class GroupEntity {
 
     @Id

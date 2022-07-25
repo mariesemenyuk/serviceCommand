@@ -6,10 +6,11 @@ import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @WebService
-@SOAPBinding(style = SOAPBinding.Style.RPC)
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL)
 public interface Command {
 
     @WebMethod

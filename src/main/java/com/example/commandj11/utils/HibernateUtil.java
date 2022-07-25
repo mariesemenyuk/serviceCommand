@@ -27,7 +27,7 @@ public class HibernateUtil {
 
                 Map<String, Object> settings = new HashMap<>();
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
-                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/tasktracker?useSSL=false");
+                settings.put(Environment.URL, "jdbc:postgresql://db:5432/tasktracker");
                 settings.put(Environment.USER, "postgres");
                 settings.put(Environment.PASS, "1111");
                 settings.put(Environment.HBM2DDL_AUTO, "update");
